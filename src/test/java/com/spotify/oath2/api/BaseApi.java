@@ -15,7 +15,7 @@ public class BaseApi {
 
   Secrets user_id = Secrets.USER_ID;
 
-  public static Response post(String path, String token, Object requestPlaylistBody, String user_id) {
+  public static Response post(String path, String token, Object requestPlaylistBody) {
     return given(getRequestSpecification())
         .header("Authorization", "Bearer " + token)
         .body(requestPlaylistBody)

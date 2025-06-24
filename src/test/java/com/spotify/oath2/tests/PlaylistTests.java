@@ -3,6 +3,8 @@ package com.spotify.oath2.tests;
 import com.spotify.oath2.api.applicationApi.PlaylistApi;
 import com.spotify.oath2.pojo.Playlist;
 import com.spotify.oath2.pojo.errormessages.InvalidToken;
+import com.spotify.oath2.utils.ConfigLoader;
+import com.spotify.oath2.utils.DataLoader;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -10,9 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class PlaylistTests {
-
-  Secrets user_id = Secrets.USER_ID;
-  Secrets playlistId = Secrets.PLAYLIST_ID;
 
   @Test
   public void create_playlist_test() {
@@ -22,7 +21,7 @@ public class PlaylistTests {
         .isPublic(false)
         .build();
 
-    Response response= PlaylistApi.post(requestPlaylistBody, user_id.getSecret());
+    Response response= PlaylistApi.post(requestPlaylistBody);
     assertThat(response.statusCode(), equalTo(201));
 
     Playlist playlistResponseBody = response.as(Playlist.class);
@@ -36,7 +35,7 @@ public class PlaylistTests {
   @Test
   public void get_playlist_test() {
 
-    Response response = PlaylistApi.get(playlistId.getSecret());
+    Response response = PlaylistApi.get(DataLoader.getInstance().getGetPlayListId());
     assertThat(response.statusCode(), equalTo(200));
     Playlist playlistResponse = response.as(Playlist.class);
 
@@ -48,15 +47,13 @@ public class PlaylistTests {
   @Test
   public void update_playlist() {
 
-    String playlistId = Secrets.PLAYLIST_ID_UPDATE.getSecret();
-
     Playlist requestPlaylistBody = Playlist.builder()
         .name("UPDATED Playlist1 - created from Postman")
         .description("New playlist description")
         .isPublic(false)
         .build();
 
-    Response response = PlaylistApi.put(requestPlaylistBody, playlistId);
+    Response response = PlaylistApi.put(requestPlaylistBody, DataLoader.getInstance().updatePlayListId());
     assertThat(response.statusCode(), equalTo(200));
 
   }
@@ -70,7 +67,7 @@ public class PlaylistTests {
         .isPublic(false)
         .build();
 
-    Response response = PlaylistApi.post(requestPlaylistBodyEmptyName, user_id.getSecret());
+    Response response = PlaylistApi.post(requestPlaylistBodyEmptyName);
     assertThat(response.statusCode(), equalTo(400));
     InvalidToken invalidToken = response.as(InvalidToken.class);
 
@@ -82,7 +79,7 @@ public class PlaylistTests {
   public void negative_invalid_token_test() {
 
 
-    Response response = PlaylistApi.get(playlistId.getSecret(), "123");
+    Response response = PlaylistApi.get(DataLoader.getInstance().getGetPlayListId(), "123");
     InvalidToken invalidToken = response.as(InvalidToken.class);
 
     assertThat(invalidToken.getError().getMessage(), equalTo("Only valid bearer authentication supported"));

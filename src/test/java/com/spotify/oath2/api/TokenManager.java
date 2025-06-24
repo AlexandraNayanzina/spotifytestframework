@@ -1,6 +1,7 @@
 package com.spotify.oath2.api;
 
 import com.spotify.oath2.tests.Secrets;
+import com.spotify.oath2.utils.ConfigLoader;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -39,10 +40,10 @@ public class TokenManager {
   private static Response renewToken() {
 
     HashMap<String, String> formParams = new HashMap<>();
-    formParams.put("client_id", clientId.getSecret());
-    formParams.put("client_secret", clientSecret.getSecret());
-    formParams.put("grant_type", "refresh_token");
-    formParams.put("refresh_token", refreshToken.getSecret());
+    formParams.put("client_id", ConfigLoader.getInstance().getClientId());
+    formParams.put("client_secret", ConfigLoader.getInstance().getClietSecret());
+    formParams.put("grant_type", ConfigLoader.getInstance().getGrantType());
+    formParams.put("refresh_token", ConfigLoader.getInstance().getRefreshToken());
 
     Response response = BaseApi.postAccount(formParams);
 

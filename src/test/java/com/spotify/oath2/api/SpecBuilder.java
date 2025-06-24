@@ -7,8 +7,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
-import static com.spotify.oath2.api.Routs.API;
-import static com.spotify.oath2.api.Routs.TOKEN;
+import static com.spotify.oath2.api.Routs.*;
 
 
 public class SpecBuilder {
@@ -19,7 +18,7 @@ public class SpecBuilder {
   public static RequestSpecification getRequestSpecification(){
     return new RequestSpecBuilder()
         .setBaseUri("https://api.spotify.com")
-        .setBasePath(API + TOKEN)
+        .setBasePath(BASE_PATH)
         .setContentType(ContentType.JSON)
         .log(LogDetail.ALL)
         .build();

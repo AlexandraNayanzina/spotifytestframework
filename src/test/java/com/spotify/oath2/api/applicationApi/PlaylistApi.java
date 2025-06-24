@@ -3,23 +3,22 @@ package com.spotify.oath2.api.applicationApi;
 import com.spotify.oath2.api.BaseApi;
 import com.spotify.oath2.pojo.Playlist;
 
-import static com.spotify.oath2.api.Routs.PLAYLISTS;
-import static com.spotify.oath2.api.Routs.USERS;
+import static com.spotify.oath2.api.Routs.*;
 import static com.spotify.oath2.api.SpecBuilder.getRequestSpecification;
 import static com.spotify.oath2.api.SpecBuilder.getResponseSpecification;
 import static com.spotify.oath2.api.TokenManager.getToken;
 import static io.restassured.RestAssured.given;
 
 import com.spotify.oath2.tests.Secrets;
+import com.spotify.oath2.utils.ConfigLoader;
 import io.restassured.response.Response;
 
 public class PlaylistApi {
 
-  Secrets user_id = Secrets.USER_ID;
 
-  public static Response post(Playlist requestPlaylistBody, String user_id) {
+  public static Response post(Playlist requestPlaylistBody) {
 
-    return BaseApi.post(USERS + "/" + user_id + "/playlists", getToken(), requestPlaylistBody, user_id);
+    return BaseApi.post(USERS + "/" + ConfigLoader.getInstance().getUserId() + "/playlists", getToken(), requestPlaylistBody);
 
   }
 

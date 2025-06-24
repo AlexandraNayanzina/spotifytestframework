@@ -39,3 +39,5 @@ build/
 /src/test/java/com/spotify/oath2/tests/Secrets.java
 /.idea/workspace.xml
 /.idea/
+/src/test/resources/config.properties
+/src/test/resources/data.properties
