@@ -3,6 +3,8 @@ package com.spotify.oath2.api.applicationApi;
 import com.spotify.oath2.api.BaseApi;
 import com.spotify.oath2.pojo.Playlist;
 
+import static com.spotify.oath2.api.Routs.PLAYLISTS;
+import static com.spotify.oath2.api.Routs.USERS;
 import static com.spotify.oath2.api.SpecBuilder.getRequestSpecification;
 import static com.spotify.oath2.api.SpecBuilder.getResponseSpecification;
 import static com.spotify.oath2.api.TokenManager.getToken;
@@ -17,14 +19,14 @@ public class PlaylistApi {
 
   public static Response post(Playlist requestPlaylistBody, String user_id) {
 
-    return BaseApi.post("/users/" + user_id + "/playlists", getToken(), requestPlaylistBody, user_id);
+    return BaseApi.post(USERS + "/" + user_id + "/playlists", getToken(), requestPlaylistBody, user_id);
 
   }
 
 
   public static Response get(String playlistId) {
 
-    return BaseApi.get("/playlists/" + playlistId, getToken(), playlistId);
+    return BaseApi.get(PLAYLISTS + "/" + playlistId, getToken(), playlistId);
 
   }
 
@@ -33,7 +35,7 @@ public class PlaylistApi {
     return given(getRequestSpecification())
         .header("Authorization", token)
         .when()
-        .get("/playlists/" + playlistId)
+        .get(PLAYLISTS + "/" + playlistId)
         .then()
         .spec(getResponseSpecification())
         .extract()
@@ -46,7 +48,7 @@ public class PlaylistApi {
         .header("Authorization", "Bearer " + getToken())
         .body(requestPlaylistBody)
         .when()
-        .put("/playlists/" + playlistId)
+        .put(PLAYLISTS + "/" + playlistId)
         .then()
         .spec(getResponseSpecification())
         .extract()

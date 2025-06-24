@@ -1,16 +1,15 @@
 package com.spotify.oath2.api;
 
-import com.spotify.oath2.pojo.Playlist;
 import com.spotify.oath2.tests.Secrets;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
 
-import static com.spotify.oath2.api.SpecBuilder.getRequestSpecification;
-import static com.spotify.oath2.api.SpecBuilder.getResponseSpecification;
-import static com.spotify.oath2.api.SpecBuilder.getAccountRequestSpecification;
+import static com.spotify.oath2.api.SpecBuilder.*;
 import static io.restassured.RestAssured.given;
+
+import static com.spotify.oath2.api.Routs.API;
+import static com.spotify.oath2.api.Routs.TOKEN;
 
 public class BaseApi {
 
@@ -33,7 +32,7 @@ public class BaseApi {
               .spec(getAccountRequestSpecification())
               .formParams(formParams)
            .when()
-              .post("/api/token")
+              .post(API + TOKEN)
            .then()
               .spec(SpecBuilder.getResponseSpecification())
               .extract()

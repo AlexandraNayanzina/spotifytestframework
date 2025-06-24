@@ -48,7 +48,7 @@ public class PlaylistTests {
   @Test
   public void update_playlist() {
 
-    String playlistId = "10GxXRxMF6mi9lfirYVa4j";
+    String playlistId = Secrets.PLAYLIST_ID_UPDATE.getSecret();
 
     Playlist requestPlaylistBody = Playlist.builder()
         .name("UPDATED Playlist1 - created from Postman")
