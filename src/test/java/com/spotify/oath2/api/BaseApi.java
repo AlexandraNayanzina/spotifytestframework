@@ -1,19 +1,15 @@
 package com.spotify.oath2.api;
 
-import com.spotify.oath2.tests.Secrets;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
 
+import static com.spotify.oath2.api.Routs.API;
+import static com.spotify.oath2.api.Routs.TOKEN;
 import static com.spotify.oath2.api.SpecBuilder.*;
 import static io.restassured.RestAssured.given;
 
-import static com.spotify.oath2.api.Routs.API;
-import static com.spotify.oath2.api.Routs.TOKEN;
-
 public class BaseApi {
-
-  Secrets user_id = Secrets.USER_ID;
 
   public static Response post(String path, String token, Object requestPlaylistBody) {
     return given(getRequestSpecification())

@@ -1,8 +1,6 @@
 package com.spotify.oath2.api;
 
-import com.spotify.oath2.tests.Secrets;
 import com.spotify.oath2.utils.ConfigLoader;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.time.Instant;
@@ -11,9 +9,6 @@ import java.util.HashMap;
 import static io.restassured.RestAssured.given;
 
 public class TokenManager {
-  static Secrets clientId = Secrets.CLIENT_ID;
-  static Secrets clientSecret = Secrets.CLIENT_SECRET;
-  static Secrets refreshToken = Secrets.REFRESH_TOKEN;
 
   private static String access_token;
   private static Instant expiry_time;
