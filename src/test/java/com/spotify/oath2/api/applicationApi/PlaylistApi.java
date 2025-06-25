@@ -3,6 +3,7 @@ package com.spotify.oath2.api.applicationApi;
 import com.spotify.oath2.api.BaseApi;
 import com.spotify.oath2.pojo.Playlist;
 import com.spotify.oath2.utils.ConfigLoader;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static com.spotify.oath2.api.Routs.PLAYLISTS;
@@ -16,16 +17,12 @@ public class PlaylistApi {
 
 
   public static Response post(Playlist requestPlaylistBody) {
-
     return BaseApi.post(USERS + "/" + ConfigLoader.getInstance().getUserId() + "/playlists", getToken(), requestPlaylistBody);
-
   }
 
 
   public static Response get(String playlistId) {
-
     return BaseApi.get(PLAYLISTS + "/" + playlistId, getToken(), playlistId);
-
   }
 
   public static Response get(String playlistId, String token) {
@@ -40,7 +37,7 @@ public class PlaylistApi {
         .response();
   }
 
-  public static Response put(Playlist requestPlaylistBody, String playlistId){
+  public static Response put(Playlist requestPlaylistBody, String playlistId) {
 
     return given(getRequestSpecification())
         .header("Authorization", "Bearer " + getToken())
@@ -48,6 +45,7 @@ public class PlaylistApi {
         .when()
         .put(PLAYLISTS + "/" + playlistId)
         .then()
+        .log().all()
         .spec(getResponseSpecification())
         .extract()
         .response();
