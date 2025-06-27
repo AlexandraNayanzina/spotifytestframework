@@ -13,7 +13,7 @@ public class BaseApi {
 
   public static Response post(String path, String token, Object requestPlaylistBody) {
     return given(getRequestSpecification())
-        .header("Authorization", "Bearer " + token)
+        .auth().oauth2(token)
         .body(requestPlaylistBody)
         .when()
         .post(path)
@@ -38,7 +38,7 @@ public class BaseApi {
   public static Response get(String path, String token, String playlistId) {
 
     return given(getRequestSpecification())
-        .header("Authorization", "Bearer " + token)
+        .auth().oauth2(token)
         .when()
         .get(path)
         .then()
@@ -49,7 +49,6 @@ public class BaseApi {
 
 
   public static Response put(String path, String token, Object requestPlaylistBody, String playlistId) {
-
     return BaseApi.put(path, token, playlistId, playlistId);
   }
 

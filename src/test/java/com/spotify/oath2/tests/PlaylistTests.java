@@ -1,5 +1,6 @@
 package com.spotify.oath2.tests;
 
+import com.spotify.oath2.api.StatusCode;
 import com.spotify.oath2.api.applicationApi.PlaylistApi;
 import com.spotify.oath2.pojo.Playlist;
 import com.spotify.oath2.pojo.errormessages.InvalidToken;
@@ -9,6 +10,8 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import io.qameta.allure.Description;
 
+import static com.spotify.oath2.utils.FakerUtils.generateName;
+import static com.spotify.oath2.utils.FakerUtils.generateDescription;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -54,8 +57,8 @@ public class PlaylistTests {
   @TmsLink("TMS-456")
   public void create_playlist_test() {
     Playlist requestPlaylistBody = playlistBuilder(
-        "Playlist1 - created from RestAssured",
-        "New playlist description",
+        generateName(),
+        generateDescription(),
         false);
     Response response= PlaylistApi.post(requestPlaylistBody);
     assertStatusCode(response.statusCode(), 201);
@@ -75,7 +78,7 @@ public class PlaylistTests {
         "New playlist description",
         true);
     Response response = PlaylistApi.get(DataLoader.getInstance().getGetPlayListId());
-    assertStatusCode(response.statusCode(), 200);
+    assertStatusCode(response.statusCode(), StatusCode.CODE_200.getCode());
     assertPlaylist(requestPlaylistBody, response.as(Playlist.class));
   }
 
@@ -93,7 +96,7 @@ public class PlaylistTests {
         false);
 
     Response response = PlaylistApi.put(requestPlaylistBody, DataLoader.getInstance().updatePlayListId());
-    assertStatusCode(response.statusCode(), 200);
+    assertStatusCode(response.statusCode(), StatusCode.CODE_200.getCode());
 
   }
 
@@ -108,12 +111,12 @@ public class PlaylistTests {
 
     Playlist requestPlaylistBodyEmptyName = Playlist.builder()
         .name("")
-        .description("New playlist description")
+        .description(generateDescription())
         .isPublic(false)
         .build();
 
     Response response = PlaylistApi.post(requestPlaylistBodyEmptyName);
-    assertError(response.as(InvalidToken.class), 400,"Missing required field: name" );
+    assertError(response.as(InvalidToken.class), StatusCode.CODE_400.getCode(),StatusCode.CODE_400.getMsg());
   }
 
   @Description("User should NOT be able to get a playlist using an invalid token")
@@ -125,7 +128,7 @@ public class PlaylistTests {
   @TmsLink("TMS-460")
   public void negative_invalid_token_test() {
     Response response = PlaylistApi.get(DataLoader.getInstance().getGetPlayListId(), "123");
-    assertError(response.as(InvalidToken.class), 400,"Only valid bearer authentication supported");
+    assertError(response.as(InvalidToken.class),  StatusCode.CODE_400_1.getCode(),StatusCode.CODE_400_1.getMsg());
 
   }
 }
