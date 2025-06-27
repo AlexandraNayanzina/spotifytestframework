@@ -18,7 +18,8 @@ public class SpecBuilder {
 
   public static RequestSpecification getRequestSpecification(){
     return new RequestSpecBuilder()
-        .setBaseUri("https://api.spotify.com")
+//        .setBaseUri("https://api.spotify.com")
+        .setBaseUri(System.getProperty("BASE_URI"))
         .setBasePath(BASE_PATH)
         .setContentType(ContentType.JSON)
         .log(LogDetail.ALL)
@@ -28,7 +29,8 @@ public class SpecBuilder {
 
   public static RequestSpecification getAccountRequestSpecification(){
     return new RequestSpecBuilder()
-        .setBaseUri("https://accounts.spotify.com")
+        .setBaseUri(System.getProperty("ACCOUNT_BASE_URI"))
+//        .setBaseUri("https://accounts.spotify.com")
         .setContentType(ContentType.URLENC)
         .log(LogDetail.ALL)
         .addFilter(new AllureRestAssured())
