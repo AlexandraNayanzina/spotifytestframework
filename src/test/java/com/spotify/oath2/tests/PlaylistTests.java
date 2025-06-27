@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @Epic("Spotify Oath 2.0")
 @Feature("Spotify API")
-public class PlaylistTests {
+public class PlaylistTests extends BaseTest{
 
   public Playlist playlistBuilder(String name, String description, boolean _public){
     Playlist playlist = Playlist.builder()
