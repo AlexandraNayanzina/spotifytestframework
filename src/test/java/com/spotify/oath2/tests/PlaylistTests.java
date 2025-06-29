@@ -30,6 +30,7 @@ public class PlaylistTests extends BaseTest{
     return playlist;
   }
 
+
   @Step
   public void assertPlaylist(Playlist requestPlaylist, Playlist responsePlaylist){
     assertThat(requestPlaylist.getName(), equalTo(responsePlaylist.getName()));
