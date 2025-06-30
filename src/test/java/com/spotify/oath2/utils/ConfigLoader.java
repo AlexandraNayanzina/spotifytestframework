@@ -4,14 +4,8 @@ import java.util.Properties;
 
 public class ConfigLoader {
 
-  private final Properties properties;
   private static ConfigLoader configLoader;
 
-
-  private ConfigLoader() {
-    properties = PropertyUtils.propertyLoader("src/test/resources/config.properties");
-
-  }
 
   public static ConfigLoader getInstance() {
     if (configLoader == null) {
@@ -21,32 +15,30 @@ public class ConfigLoader {
   }
 
   public String getClientId(){
-    String clientIdProperty = properties.getProperty("client_id");
-    if(clientIdProperty != null) return clientIdProperty;
-    else throw new RuntimeException("property client_id is not specified in the config.properties file");
+    return getPropertyOrThrowException("client_id");
   }
 
   public String getClietSecret(){
-    String prop = properties.getProperty("client_secret");
-    if(prop != null) return prop;
-    else throw new RuntimeException("property client_secret is not specified in the config.properties file");
+    return getPropertyOrThrowException("client_secret");
   }
 
   public String getGrantType(){
-    String prop = properties.getProperty("grant_type");
-    if(prop != null) return prop;
-    else throw new RuntimeException("property grant_type is not specified in the config.properties file");
+    return getPropertyOrThrowException("grant_type");
   }
 
   public String getRefreshToken(){
-    String prop = properties.getProperty("refresh_token");
-    if(prop != null) return prop;
-    else throw new RuntimeException("property refresh_token is not specified in the config.properties file");
+    return getPropertyOrThrowException("refresh_token");
   }
 
   public String getUserId(){
-    String userIdProperty = properties.getProperty("user_id");
-    if(userIdProperty != null) return userIdProperty;
-    else throw new RuntimeException("propertyh client_id is not specified in the config.properties file");
+    return getPropertyOrThrowException("user_id");
+  }
+
+  private String getPropertyOrThrowException(String propertyName) {
+    var value = System.getProperty(propertyName);
+    if (value == null) {
+      throw new RuntimeException("Property '" + propertyName + "' is null");
+    }
+    return value;
   }
 }

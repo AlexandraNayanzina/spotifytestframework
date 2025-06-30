@@ -43,3 +43,4 @@ build/
 /src/test/resources/data.properties
 /allure-report/
 /allure-results/
+/src/test/resources/config_local.properties
