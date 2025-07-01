@@ -18,13 +18,13 @@ pipeline {
                 echo "Using environment variables in Maven test stage"
                 sh """
                     mvn clean test  \
-                        -DBASE_URI=${BASE_URI}  \
-                        -DACCOUNT_BASE_URI=${ACCOUNT_BASE_URI} \
-                        -Dclient_id=${CLIENT_ID}    \
-                        -Dclient_secret=${CLIENT_SECRET}    \
+                        -DBASE_URI=$BASE_URI  \
+                        -DACCOUNT_BASE_URI=$ACCOUNT_BASE_URI \
+                        -Dclient_id=$CLIENT_ID    \
+                        -Dclient_secret=$CLIENT_SECRET    \
                         -Dgrant_type=refresh_token  \
-                        -Drefresh_token=${REFRESH_TOKEN} \
-                        -Duser_id=${USER_ID}
+                        -Drefresh_token=$REFRESH_TOKEN \
+                        -Duser_id=$USER_ID
                 """
             }
         }
